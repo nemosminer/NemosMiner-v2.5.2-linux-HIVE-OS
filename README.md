@@ -1,23 +1,74 @@
  # HIVE compatibile
  
- To use this you need
- 1. https://gitforwindows.org/  and generate ssh rsa keys to login into your Hive node ( user user ) without prompt for password,  only one node will by used for benchmarks. (more info https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/ )
- 2. edit file Include.ps1  line 188  - change to your Hive IP node - this is used for benchmark results
- 3. edit file /Bin/ccminer.bat   - change to you Hive IP or/and add more nodes
- 4. files from hive-script must be copied into Hive nodes   ( swap.sh  , swap_ccminer.py  ) to /home/user/
+ 0: Extract the NemosMiner-v2.5.2-linux-HIVE-OS zip to c:\NemosMiner
+
+1: Download https://gitforwindows.org/ and only install Git Bash
+2: Create a folder in
+
+`c:\users\<username>\ called .ssh`
+3: Open Git Bash
+4: Enter
+
+`ssh user@<ip address or host name`
+5: Password is
+
+`1`
+6: Enter
+
+`ssh-keygen -t rsa -b 4096 -C "your_email@example.com"`
+7: Save the key at
+
+`/home/user/.ssh/id_rsa`
+8: Don't enter a passphrase or anything and complete the creation process
+9: Enter
+
+`eval $(ssh-agent -s)`
+10: add the key with
+
+`ssh-add /home/user/.ssh/id_rsa`
+That creates and establishes the key on the miner. Next up to copy the public key to windows
+
+11: enter exit twice
+
+`exit `
+`exit`
+12: This puts you back on your local machine. Now Enter
+
+`ssh-copy-id user@<ip address or host name>`
+13: Password is
+
+`1`
+That should copy the public key. Last thing to do is to move the swap.sh and swap_ccminer.py files
+
+14: On windows move folder hive-script to a usb key and plug usb key onto Hive Machine.
+15: Back on git bash enter
+
+`ssh user@<ip address or host name>`
+16: Find USB partition using
+
+`lsblk`
+17: make folder to mount partition to using
+
+`sudo mkdir /media/usbstick`
+18: mount USB stick
+
+`sudo mount -t vfat /dev/sdb1 /media/usbstick `
+    REPLACE sdb1 with the correct partition from 16
+19: Enter folder using
+
+`cd /media/usbstick/hive-script`
+20: Move the two files
+
+`mv swap.sh /home/user` 
+`mv swap_ccminer.py /home/user`
+Lastly update the appropriate files back on your Windows box to point to your hive miner.
+
+21: edit file Include.ps1 line 188 - change to your Hive IP node
+22: edit file /Bin/ccminer.bat - change to you Hive IP node
  
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- # NemosMiner-v2.5.1
- Updated 2018 Feb 27
+# NemosMiner-v2.5.2
+ Updated 2018 March 27
  
  Instructions at bottom of the page.
 *****
